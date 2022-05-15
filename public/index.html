@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div style="display: inline-block; vertical-align: top">
+      <img src="./HODLINFO.8f78fc06.png" alt="img" width="250" />
+    </div>
+    <div style="display: inline-block; color: white">
+      <p>.com</p>
+    </div>
+    <div class="fiat-crypto-table table-responsive">
+      <table id="data_tbl" style="width: 100%">
+        <tr id="table_hdr">
+          <th style="color: #888686">#</th>
+          <th style="color: #888686">Platform(name)</th>
+          <th style="color: #888686">Last Traded Price(last)</th>
+          <th style="color: #888686">Buy(buy)/Sell(sell) Price</th>
+          <th style="color: #888686">Volume(volume)</th>
+          <th style="color: #888686">base_unit</th>
+        </tr>
+      </table>
+    </div>
+    <script>
+      var data = fetch(`http://${location.hostname}:3000/api/v1/coins`)
+        .then((response) => response.json())
+        .then((data) => {
+          data = JSON.parse(data.data);
+          console.log(data);
+          for (let i = 0; i < data.length; i++) {
+            let tr = document.createElement("tr");
+            let id = tr.appendChild(document.createElement("td"));
+            let name = tr.appendChild(document.createElement("td"));
+            let last = tr.appendChild(document.createElement("td"));
+            let buysell = tr.appendChild(document.createElement("td"));
+            //let sell=tr.appendChild(document.createElement('td'))
+            let volume = tr.appendChild(document.createElement("td"));
+            let base_unit = tr.appendChild(document.createElement("td"));
+            id.innerHTML = i + 1;
+            name.innerHTML = data[i].name;
+            last.innerHTML = data[i].last;
+            buysell.innerHTML = data[i].buy + "/" + data[i].sell;
+            volume.innerHTML = data[i].volume;
+            base_unit.innerHTML = data[i].base_unit;
+            document.getElementById("data_tbl").appendChild(tr);
+            console.log(
+              data[i].name,
+              data[i].last,
+              data[i].buy,
+              data[i].sell,
+              data[i].volume,
+              data[i].base_unit
+            );
+            // let html = `<tr><td>${data[i].name}</td><td>${data[i].last}</td><td>${data[i].buy}/${data[i].sell}</td><td>${data[i].volume}</td><td>${data[i].base_unit}</td></tr>`;
+            // document.getElementById("tbl").innerHTML += html;
+          }
+        });
+      console.log(data);
+    </script>
+  </body>
+</html>
