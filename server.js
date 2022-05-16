@@ -14,7 +14,7 @@ const entries = https.get(options, (res) => {
     data += d.toString();
   });
   res.on("end", () => {
-    fs.writeFile("data.json", data, () => {});
+    // fs.writeFile("data.json", data, () => {});
     data = JSON.parse(data);
     Object.keys(data)
       .slice(0, 10)
